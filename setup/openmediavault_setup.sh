@@ -47,37 +47,8 @@ apt-get update &>/dev/null
 apt-get -qqy upgrade &>/dev/null
 
 
+echo -e "${CHECKMARK} \e[1;92m Installing Open Media Vault... \e[0m"
 
-
-
-
-
-
-
-
-echo -e "${CHECKMARK} \e[1;92m Installing Dependencies... \e[0m"
- apt-get update &>/dev/null
- apt-get -qqy install \
-     gnupg \
-     curl \
-     sudo &>/dev/null
- sudo apt install apt-transport-https -y &>/dev/null
- sudo apt-get install software-properties-common -y &>/dev/null
- 
-echo -e "${CHECKMARK} \e[1;92m Setting Up Open Media Vault Repository... \e[0m"
-sudo add-apt-repository universe -y &>/dev/null
-wget -O "/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc" https://packages.openmediavault.org/public/archive.key
-apt-key add "/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc"
-
-apt-get update
-apt-get --yes --auto-remove --show-upgraded \
-    --allow-downgrades --allow-change-held-packages \
-    --no-install-recommends \
-    --option DPkg::Options::="--force-confdef" \
-    --option DPkg::Options::="--force-confold" \
-    install openmediavault-keyring openmediavault
-
-# Populate the database.
-omv-confdbadm populate
+wget -O - https://raw.githubusercontent.com/OpenMediaVault-Plugin-Developers/installScript/master/install | sudo bash
 
 
